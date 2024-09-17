@@ -12,5 +12,7 @@ void systemInit(void)
 	LED_Init();  
 	BUZ_Init();
 	OLED_Init();
+	BUTTON_Init();
+	uart_init(9600);
 	          
 }

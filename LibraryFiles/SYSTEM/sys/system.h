@@ -17,7 +17,9 @@
 #include "delay.h"
 #include "led.h"
 #include "buz.h"
-
+#include "uart.h"
+#include "show.h"
+#include "button.h"
 
 void systemInit(void);
 
