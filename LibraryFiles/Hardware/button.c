@@ -9,7 +9,7 @@ void BUTTON_Init(void) {
   GPIO_InitTypeDef GPIO_InitStructure;
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE); // Enable APB Clock
 
-  GPIO_InitStructure.GPIO_Pin = BUZ_PIN; // button Pin
+  GPIO_InitStructure.GPIO_Pin = BUTTON_PIN; // button Pin
   GPIO_InitStructure.GPIO_Mode =
       GPIO_Mode_IPD; // try IPU or IPD which one is correct
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; // 50M
@@ -18,7 +18,7 @@ void BUTTON_Init(void) {
 }
 
 void button_task(void *pvParameters) {
-//   BUZZER = 0;
+  BUZZER = 0;
   while (1) {
     if (BUTTON == 0) {
       playSong(song);
