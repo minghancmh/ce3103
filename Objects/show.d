@@ -59,6 +59,9 @@
 .\objects\show.o: .\LibraryFiles\Hardware\led.h
 .\objects\show.o: .\LibraryFiles\SYSTEM\sys\system.h
 .\objects\show.o: .\LibraryFiles\Hardware\buz.h
+.\objects\show.o: .\LibraryFiles\Hardware\uart.h
+.\objects\show.o: .\LibraryFiles\Hardware\show.h
+.\objects\show.o: .\LibraryFiles\Hardware\button.h
 .\objects\show.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\show.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\show.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h

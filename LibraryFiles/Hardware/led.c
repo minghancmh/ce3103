@@ -20,9 +20,10 @@ void LED_Init(void)
 
 void led_task(void *pvParameters)
 {
-    while(1)
-    {
-      LED=~LED;        //0 on, 1 off   		
-      vTaskDelay(Led_Count); //Delay 
-    }
+	LED = ~LED;
+   // while(1)
+    //{
+     // LED=~LED;        //0 on, 1 off   		
+     // vTaskDelay(Led_Count); //Delay 
+   // }
 }  

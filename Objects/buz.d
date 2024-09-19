@@ -58,6 +58,10 @@
 .\objects\buz.o: .\LibraryFiles\Hardware\led.h
 .\objects\buz.o: .\LibraryFiles\SYSTEM\sys\system.h
 .\objects\buz.o: .\LibraryFiles\Hardware\buz.h
+.\objects\buz.o: .\LibraryFiles\Hardware\uart.h
+.\objects\buz.o: .\LibraryFiles\Hardware\show.h
+.\objects\buz.o: .\LibraryFiles\Hardware\oled.h
+.\objects\buz.o: .\LibraryFiles\Hardware\button.h
 .\objects\buz.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\buz.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\buz.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h

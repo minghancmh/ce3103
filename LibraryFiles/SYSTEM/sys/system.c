@@ -13,6 +13,6 @@ void systemInit(void)
 	BUZ_Init();
 	OLED_Init();
 	BUTTON_Init();
-	uart_init(9600);
+	uart3_init(115200);
 	          
 }

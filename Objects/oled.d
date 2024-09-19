@@ -58,6 +58,10 @@
 .\objects\oled.o: .\LibraryFiles\Hardware\led.h
 .\objects\oled.o: .\LibraryFiles\SYSTEM\sys\system.h
 .\objects\oled.o: .\LibraryFiles\Hardware\buz.h
+.\objects\oled.o: .\LibraryFiles\Hardware\uart.h
+.\objects\oled.o: .\LibraryFiles\Hardware\show.h
+.\objects\oled.o: .\LibraryFiles\Hardware\oled.h
+.\objects\oled.o: .\LibraryFiles\Hardware\button.h
 .\objects\oled.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\objects\oled.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\objects\oled.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdarg.h
