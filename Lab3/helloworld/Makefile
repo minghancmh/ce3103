@@ -32,15 +32,15 @@ all: $(EXEC) $(DEBUG_EXEC) $(GPROF_EXEC)
 
 # Build the Regular Executable
 $(EXEC): $(OBJECTS)
-	$(CC) $(CFLAGS) -o $(EXEC) $(OBJECTS)
+	$(CC) $(CFLAGS) -o $@ $^
 
 # Build the Debug Executable
 $(DEBUG_EXEC): $(DEBUG_OBJECTS)
-	$(CC) $(DEBUG_CFLAGS) -o $(DEBUG_EXEC) $(DEBUG_OBJECTS)
+	$(CC) $(DEBUG_CFLAGS) -o $@ $^
 
 # Build the GProf Executable
 $(GPROF_EXEC) : $(GPROF_OBJECTS)
-	$(CC) $(GPROF_CFLAGS) -o $(GPROF_EXEC) $(GPROF_OBJECTS)
+	$(CC) $(GPROF_CFLAGS) -o $@ $^
 
 # Compile .c Files to .o Files (Regular Build)
 %.o: %.c
