@@ -1,0 +1,1 @@
+clang hello-main.c hello-funct1.c -o helloworld
