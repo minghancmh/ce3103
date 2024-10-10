@@ -1,0 +1,38 @@
+##### PART 1 (Teasers) ####
+
+// Build the image in Lab4 (local machine)
+docker build -t lab-ubuntu .
+
+// Run the ubuntu docker container
+docker run --name client -it -v "/Users/minghanchan/Desktop/CE3103 - Embedded Systems/ce3103/Lab4/src:/src" lab-ubuntu
+
+// compile pthread1.c
+gcc -o pthread1 pthread1.c -l pthread
+
+// run pthread1
+./pthread1
+
+
+
+
+##### PART 2 (Client-Server emulated on docker) #### 
+
+// REMEMBER TO CHANGE IP ADDRESS IN CLIENT!
+docker inspect <server_container>
+
+// create a docker network
+docker network create ceLab
+
+// Build the image in Lab4 (local machine)
+docker build -t lab-ubuntu .
+
+// Run these containers in the same network so they can talk to each other through IP
+// To run the docker container with bind mount (client)
+docker run --name client -it -v "/Users/minghanchan/Desktop/CE3103 - Embedded Systems/ce3103/Lab4/src/ubuntuClient:/src" lab-ubuntu
+
+// To run the docker container with bind mount (raspi server)
+docker run --name raspiServer -it -v "/Users/minghanchan/Desktop/CE3103 - Embedded Systems/ce3103/Lab4/src/raspiServer:/src" lab-ubuntu
+
+// Check for successful installation
+gcc --version
+
