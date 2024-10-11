@@ -1,24 +1,54 @@
 #include <arpa/inet.h>
+#include <pthread.h>
+#include <semaphore.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/fcntl.h>
+#include <sys/wait.h>
 #include <unistd.h>
 
 #define BUFFER_SIZE 1024
 #define PORT 8080
 
+int num_connections = 0;
+
+void handle_sigchild(int sig) {
+  (void)sig;
+  int status;
+  pid_t pid;
+
+  while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
+    num_connections--;
+    pid_t pp = getpid();
+    printf("[%d]: Num Connections = %d\n", pp, num_connections);
+  }
+}
+
 int main() {
   int server_fd, new_socket;
+  sem_t *sema;
   struct sockaddr_in address;
   int addr_len = sizeof(address);
 
   char buffer[BUFFER_SIZE];
+
+  // Initialize the semaphore
+  sema = sem_open("concurrent_conn_sema", O_CREAT, 0644, 3);
+
+  if (sema == SEM_FAILED) {
+    perror("Counting semaphore initialization failed");
+    exit(EXIT_FAILURE);
+  }
 
   // Creates a socket with TCP, IPv4 configuration
   if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
     perror("Socket creation failed.");
     exit(EXIT_FAILURE);
   }
+
+  signal(SIGCHLD, handle_sigchild);
 
   address.sin_family = AF_INET;
 
@@ -46,6 +76,7 @@ int main() {
 
   while (1) {
     pid_t pp = getpid();
+
     printf("[%d]: Server listening on port %d\n", pp, PORT);
 
     // Accept new incoming connetions
@@ -55,6 +86,17 @@ int main() {
       continue;
     }
 
+    // Counting semaphone implementation so that server sleeps when it has 3
+    // incoming connections Will only wake up when one of those incoming
+    // connections terminates
+    // Down the semaphore when we want to fork
+    printf("[%d]: trying to attain the semaphore\n", pp);
+    sem_wait(sema);
+    printf("[%d]: semaphore attained\n", pp);
+
+    num_connections++;
+    printf("[%d]: Num Connections = %d\n", pp, num_connections);
+
     // Fork so that we can handle multiple connections
     pid_t pid = fork();
     if (pid < 0) {
@@ -63,6 +105,7 @@ int main() {
       // we are in the child
       close(server_fd);
       pid_t p = getpid();
+
       printf("[%d]: Connection established with client!\n", p);
       char *server_ack_msg = "Server Acknowledged!";
 
@@ -84,6 +127,9 @@ int main() {
         }
       }
       close(new_socket);
+
+      // Up the semaphore when child process exits
+      sem_post(sema);
       exit(0); // exit child process when done
     } else {
       // we are in the parent
@@ -93,6 +139,7 @@ int main() {
     }
   }
   close(server_fd);
+  sem_close(sema);
 
   return 0;
 }
