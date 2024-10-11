@@ -12,6 +12,21 @@
 #define BUFFER_SIZE 1024
 #define PORT 8080
 
+/*
+A little note about MAX_QUEUE_LEN and MAX_CONN
+
+MAX_QUEUE_LEN: This controls the length of the queue that the socket will permit.
+Should the length of the socket queue (which holds incoming connections) increase beyond MAX_QUEUE_LEN,
+we will get ERRCONNREFUSED
+
+MAX_CONN: This is what is used to initialise our counting semaphore. It defines the maximum number of 
+concurrent connections that our server can handle.
+
+These 2 variables are different, and handle different things. 
+*/
+#define MAX_QUEUE_LEN 3
+#define MAX_CONN 3
+
 int num_connections = 0;
 
 void handle_sigchild(int sig) {
@@ -35,7 +50,7 @@ int main() {
   char buffer[BUFFER_SIZE];
 
   // Initialize the semaphore
-  sema = sem_open("concurrent_conn_sema", O_CREAT, 0644, 3);
+  sema = sem_open("concurrent_conn_sema", O_CREAT, 0644, MAX_CONN);
 
   if (sema == SEM_FAILED) {
     perror("Counting semaphore initialization failed");
@@ -68,7 +83,7 @@ int main() {
   // listen for incoming connections
   // max len of queue for incoming connections (3 connections max, anything
   // beyond that, we throw ERRCONNREFUSED)
-  if (listen(server_fd, 3) < 0) {
+  if (listen(server_fd, MAX_QUEUE_LEN) < 0) {
     perror("Listen failed");
     close(server_fd);
     exit(EXIT_FAILURE);

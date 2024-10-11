@@ -36,6 +36,7 @@ int main() {
     perror("Invalid address / address not supported");
     return -1;
   }
+  
 
   // Connecting to the server on the socked created above
   if (connect(sock, (struct sockaddr *)&server_address,
