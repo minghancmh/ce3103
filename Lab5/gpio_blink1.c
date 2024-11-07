@@ -1,11 +1,12 @@
-#include <linux/gpio.h> /* you may want to look at the contents of this file, to understand
-the various elements of the data structure shown in the code below */
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/fcntl.h>
-#include <sys/ioctl.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <sys/ioctl.h>
+#include <string.h>
 #include <unistd.h>
+#include <linux/gpio.h>
 
 int main(int argc, char *argv[]) {
   int fd0 = open("/dev/gpiochip0", O_RDWR); // open the file descriptor
