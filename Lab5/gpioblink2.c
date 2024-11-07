@@ -55,13 +55,6 @@ int main(int argc, char *argv[])
             data_GY.values[2] = 0; // Ensure Red LED is OFF after blinking
             ioctl(req_GY.fd, GPIOHANDLE_SET_LINE_VALUES_IOCTL, &data_GY);
         }
-
-        // Toggle Green and Yellow LEDs
-        data_GY.values[0] = !data_GY.values[0]; // Toggle Green LED
-        data_GY.values[1] = !data_GY.values[1]; // Toggle Yellow LED
-        ioctl(req_GY.fd, GPIOHANDLE_SET_LINE_VALUES_IOCTL, &data_GY); // Output LED states
-
-        usleep(500000); // Sleep for 0.5 seconds (500ms)
     }
 
     // Release GPIO line handles and close the file descriptors
