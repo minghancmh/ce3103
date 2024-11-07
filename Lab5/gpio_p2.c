@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
     exit(EXIT_FAILURE);
   };
 
-  for (int i = 0; i < 5000; ++i) {
+  for (int i = 0; i < 500000000; ++i) {
     if (ioctl(req_pb.fd, GPIOHANDLE_GET_LINE_VALUES_IOCTL, &data_pb) == -1) {
       perror("Failed to get line value of Push Button");
       close(req_pb.fd);
@@ -66,6 +66,17 @@ int main(int argc, char *argv[]) {
 
     if (data_pb.values[0] == 1) { // Button is pressed
       data_GYR.values[2] = 1; // Turn on the Red LED
+      for (int j=0; j<10; j++){
+        data_GYR.values[2] = !data_GYR.values[2];
+        if (ioctl(req_GYR.fd, GPIOHANDLE_SET_LINE_VALUES_IOCTL, &data_GYR) == -1) {
+      perror("Failed to set line values");
+      close(req_pb.fd);
+      close(req_GYR.fd);
+      close(fd0);
+      exit(EXIT_FAILURE);
+    } 
+    usleep(1000000);
+      }
     } else {
         data_GYR.values[2] = 0; // Else if the butotn not pressed, we turn off the Red LED
     }
@@ -78,7 +89,7 @@ int main(int argc, char *argv[]) {
       exit(EXIT_FAILURE);
     }
 
-    usleep(1000000); // sleep for 1 second
+    usleep(1000); // sleep for 1 second
   }                  
   close(req_pb.fd);
   close(req_GYR.fd);
