@@ -13,6 +13,7 @@ static int result;                   // Store the result of request_irq
 
 // Interrupt handler function prototype
 // static irqreturn_t rpi_gpio_isr(int irq, void *dev_id);
+static irq_handler_t rpi_gpio_isr(int irq, void *dev_id);
 
 static int __init rpi_gpio_init(void) {
   // Request and set up GPIO for LED
